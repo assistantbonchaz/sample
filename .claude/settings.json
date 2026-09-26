@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ssh *)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ \"$CLAUDE_CODE_REMOTE\" = true ] || exit 0; command -v ssh >/dev/null 2>&1 && exit 0; S=$([ \"$(id -u)\" = 0 ] || echo sudo); { $S apt-get update -qq; $S apt-get install -y -qq openssh-client; } >/dev/null 2>&1 || true",
+            "timeout": 180,
+            "statusMessage": "Installing openssh-client"
+          }
+        ]
+      }
+    ]
+  }
+}
